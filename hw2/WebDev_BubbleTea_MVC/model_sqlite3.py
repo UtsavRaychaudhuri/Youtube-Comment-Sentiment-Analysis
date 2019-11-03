@@ -1,11 +1,10 @@
 from datetime import date
 from Model import Model
 import sqlite3
-DB_FILE = 'entries.db'    # file for our Database
+DB_FILE = 'entries.db'    # file for the Database
 
 class model(Model):
     def __init__(self):
-        # Make sure our database exists
         connection = sqlite3.connect(DB_FILE)
         cursor = connection.cursor()
         try:

@@ -1,16 +1,16 @@
 <html>
 {% extends "layout.html" %}
 {% block content %}   
-<h2>Entries</h2>
+<h2 style="color:brown">BubbleTea Store Entries</h2>
     {% for entry in entries %}
         <p class=entry>
-            <br>{{ entry.name }}</br> 
-	 <br> {{entry.address }}</br>
-            {{entry.city}}
-            {{entry.state}}
-            {{entry.zipcode}}
-            <br>signed on {{ entry.signed_on}}<br>
-            {{ entry.message }}
+         <br>Store Name: {{ entry.name }} </br>
+	 <br>Store address: {{entry.address }}</br>
+          <br>City: {{entry.city}}</br>
+           <br>State: {{entry.state}}</br>
+            <br>Zip code: {{entry.zipcode}}</br>
+            <br>signed on: {{ entry.signed_on}}</br>
+            <br>message: {{ entry.message }}</br>
         </p>
 
     {% endfor %}
