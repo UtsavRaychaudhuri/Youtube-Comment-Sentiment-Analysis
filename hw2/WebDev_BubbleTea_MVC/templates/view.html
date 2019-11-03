@@ -1,0 +1,18 @@
+<html>
+{% extends "layout.html" %}
+{% block content %}   
+<h2>Entries</h2>
+    {% for entry in entries %}
+        <p class=entry>
+            <br>{{ entry.name }}</br> 
+	 <br> {{entry.address }}</br>
+            {{entry.city}}
+            {{entry.state}}
+            {{entry.zipcode}}
+            <br>signed on {{ entry.signed_on}}<br>
+            {{ entry.message }}
+        </p>
+
+    {% endfor %}
+{% endblock %}
+</html>
