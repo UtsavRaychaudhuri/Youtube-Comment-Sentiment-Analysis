@@ -1,0 +1,13 @@
+<html>
+{% extends "layout.html" %}
+{% block content %}
+<h2 style="text-align:center; color:brown" >Bubble Tea Stores</h2>
+<img src="{{url_for('static', filename='bubbleTea.jpeg')}}" alt="Bubble Tea" width="400" height="300">
+<h5 style=" color:brown">Provide information about your favorite BubbleTea stores in the world <a href="{{ url_for('sign') }}">here</a></h5>
+
+<h5 style=" color:brown" >view some of the BubbleTea stores <a href="{{ url_for('view') }}">here</a> </h5>
+
+
+{% endblock %}
+</html>
+
