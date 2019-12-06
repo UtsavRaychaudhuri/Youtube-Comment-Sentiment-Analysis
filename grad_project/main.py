@@ -180,9 +180,12 @@ def upload_photo():
             'Unknown', 'Very Unlikely', 'Unlikely', 'Possible', 'Likely',
             'Very Likely']
         face_joy = likelihoods[face.joy_likelihood]
+        face_angry=likelihoods[face.anger_likelihood]
+        face_suprise=likelihoods[face.surprise_likelihood]
     else:
         face_joy = 'Unknown'
-
+        face_angry= 'Unknown'
+        face_suprise='Unknown'
     # Create a Cloud Datastore client.
     datastore_client = datastore.Client()
 
@@ -205,6 +208,8 @@ def upload_photo():
     entity['image_public_url'] = blob.public_url
     entity['timestamp'] = current_datetime
     entity['joy'] = face_joy
+    entity['angry']=face_angry
+    entity['suprise']=face_suprise
 
     # Save the new entity to Datastore.
     datastore_client.put(entity)
