@@ -7,7 +7,18 @@ Storage, Datastore, and the Cloud Vision API.</p>
 
 <html>
   <body>
-    <form action="upload_photo" method="POST" enctype="multipart/form-data">
+    <form role="form" method="POST" action="/word">
+            Enter the word: 
+              <input type="text" name="word" class="form-control"  placeholder="Enter a word" style="max-width: 300px;"><br>
+            
+       <button type="GIF" class="btn btn-default">GIF</button>
+     </form>
+       <br>
+          {% for error in errors %}
+            <h4>{{ error }}</h4>
+          {% endfor %}
+          <br>
+     <form action="upload_photo" method="POST" enctype="multipart/form-data">
       Upload File: <input type="file" name="file"><br>
       <input type="submit" name="submit" value="Submit">
     </form>
