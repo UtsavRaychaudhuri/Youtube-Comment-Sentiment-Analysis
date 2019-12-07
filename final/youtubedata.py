@@ -103,3 +103,11 @@ def search_videos_by_keyword(service, **kwargs):
         final_result.extend([(video_id, title, comment) for comment in comments]) 
 
     write_to_csv(final_result)
+
+def callme_for_fetching_comments():
+    # When running locally, disable OAuthlib's HTTPs verification. When
+    # running in production *do not* leave this option enabled.
+    os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+    service = get_authenticated_service(API_SERVICE_NAME,API_VERSION,SCOPES)
+    keyword = input('Enter a keyword: ')
+    search_videos_by_keyword(service, q=keyword, part='id,snippet', eventType='completed', type='video')
