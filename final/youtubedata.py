@@ -101,7 +101,6 @@ def search_videos_by_keyword(service, **kwargs):
         # make a tuple consisting of the video id, title, comment and add the result to 
         # the final list
         final_result.extend([(video_id, title, comment) for comment in comments]) 
-
     write_to_csv(final_result)
 
 def callme_for_fetching_comments(search_text):
