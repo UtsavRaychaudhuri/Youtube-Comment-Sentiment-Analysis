@@ -63,3 +63,11 @@ def get_video_comments(service, **kwargs):
             break
 
     return comments
+
+def write_to_csv(comments):
+    with open('comments.csv', 'w') as comments_file:
+        comments_writer = csv.writer(comments_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        comments_writer.writerow(['Video ID', 'Title', 'Comment'])
+        for row in comments:
+            # convert the tuple to a list and write to the output file
+            comments_writer.writerow(list(row))
