@@ -71,3 +71,22 @@ def write_to_csv(comments):
         for row in comments:
             # convert the tuple to a list and write to the output file
             comments_writer.writerow(list(row))
+        
+def get_videos(service, **kwargs):
+    final_results = []
+    results = service.search().list(**kwargs).execute()
+
+    i = 0
+    max_pages = 3
+    while results and i < max_pages:
+        final_results.extend(results['items'])
+
+        # Check if another page exists
+        if 'nextPageToken' in results:
+            kwargs['pageToken'] = results['nextPageToken']
+            results = service.search().list(**kwargs).execute()
+            i += 1
+        else:
+            break
+
+    return final_results
