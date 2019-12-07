@@ -40,3 +40,26 @@ def get_authenticated_service(API_SERVICE_NAME,API_VERSION,SCOPES):
             pickle.dump(credentials, token)
 
     return build(API_SERVICE_NAME, API_VERSION, credentials = credentials)
+
+def get_video_comments(service, **kwargs):
+    comments = []
+    results = ""
+    try:
+        results = service.commentThreads().list(**kwargs).execute()
+    except HttpError:
+        print("There was some errors listing the comments")
+
+
+    while results:
+        for item in results['items']:
+            comment = item['snippet']['topLevelComment']['snippet']['textDisplay']
+            comments.append(comment)
+
+        # Check if another page exists
+        if 'nextPageToken' in results:
+            kwargs['pageToken'] = results['nextPageToken']
+            results = service.commentThreads().list(**kwargs).execute()
+        else:
+            break
+
+    return comments
