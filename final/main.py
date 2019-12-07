@@ -78,7 +78,7 @@ def homepage():
     return render_template('homepage.html', image_entities=image_entities)
 
 @app.route('/youtube-comment-analysis',methods=['GET'])
-def youtube-comment-analysis():
+def youtubecommentanalysis():
     return render_template('youtube.html')
 
 @app.route('/analyse-comments',methods=['GET'])
