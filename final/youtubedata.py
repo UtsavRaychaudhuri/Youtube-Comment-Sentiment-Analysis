@@ -90,3 +90,16 @@ def get_videos(service, **kwargs):
             break
 
     return final_results
+
+def search_videos_by_keyword(service, **kwargs):
+    results = get_videos(service, **kwargs)
+    final_result = []
+    for item in results:
+        title = item['snippet']['title']
+        video_id = item['id']['videoId']
+        comments = get_video_comments(service, part='snippet', videoId=video_id, textFormat='plainText')
+        # make a tuple consisting of the video id, title, comment and add the result to 
+        # the final list
+        final_result.extend([(video_id, title, comment) for comment in comments]) 
+
+    write_to_csv(final_result)
