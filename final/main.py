@@ -31,6 +31,7 @@ from PIL import Image
 import requests
 from io import BytesIO
 import urllib.request
+from nlp import get_sentiment_from_reviews
 
 CLOUD_STORAGE_BUCKET = os.environ.get('CLOUD_STORAGE_BUCKET')
 
@@ -63,7 +64,7 @@ def submit():
  r = requests.get(url)
  img = Image.open(BytesIO(r.content))
  return Response(r,mimetype="image/gif",headers={"Content-disposition": "attachment; filename="+q+'.gif'})
-@app.route('/')
+@app.route('/giphy')
 def homepage():
     # Create a Cloud Datastore client.
     datastore_client = datastore.Client()
@@ -75,6 +76,18 @@ def homepage():
 
     # Return a Jinja2 HTML template and pass in image_entities as a parameter.
     return render_template('homepage.html', image_entities=image_entities)
+
+@app.route('/youtube-comment-analysis',methods=['GET'])
+def youtube-comment-analysis():
+    return render_template('youtube.html')
+
+@app.route('/analyse-comments',methods=['GET'])
+def analyse_comments():
+    search_text=request.form["name"]
+    comment_analysis = get_sentiment_from_reviews(search_text)
+    return render_template('youtube.html',analysis = comment_analysis)
+
+
 
  
 @app.route('/upload_photo', methods=['GET', 'POST'])
