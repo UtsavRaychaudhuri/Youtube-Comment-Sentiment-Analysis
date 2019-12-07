@@ -104,10 +104,9 @@ def search_videos_by_keyword(service, **kwargs):
 
     write_to_csv(final_result)
 
-def callme_for_fetching_comments():
+def callme_for_fetching_comments(search_text):
     # When running locally, disable OAuthlib's HTTPs verification. When
     # running in production *do not* leave this option enabled.
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
     service = get_authenticated_service(API_SERVICE_NAME,API_VERSION,SCOPES)
-    keyword = input('Enter a keyword: ')
-    search_videos_by_keyword(service, q=keyword, part='id,snippet', eventType='completed', type='video')
+    search_videos_by_keyword(service, q=search_text, part='id,snippet', eventType='completed', type='video')
