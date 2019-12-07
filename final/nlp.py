@@ -14,7 +14,7 @@ def get_sentiment_from_reviews(search_text):
     #opens the comments.csv file for reading
     with open('comments.csv', mode='r') as csv_file:
     #converts csv into python dict for easy reading
-    csv_reader = csv.DictReader(csv_file)
+        csv_reader = csv.DictReader(csv_file)
     myvideodb={}
     comment_analysis = {}
     #inserts a {"key":"value" of the form {"Video Title":"Comments on the video" into myvideodb}
