@@ -64,8 +64,10 @@ def submit():
  r = requests.get(url)
  img = Image.open(BytesIO(r.content))
  return Response(r,mimetype="image/gif",headers={"Content-disposition": "attachment; filename="+q+'.gif'})
-@app.route('/giphy')
-def homepage():
+
+
+@app.route('/giphy',methods=['GET'])
+def giphy():
     # Create a Cloud Datastore client.
     datastore_client = datastore.Client()
 
@@ -77,15 +79,19 @@ def homepage():
     # Return a Jinja2 HTML template and pass in image_entities as a parameter.
     return render_template('homepage.html', image_entities=image_entities)
 
-@app.route('/youtube-comment-analysis',methods=['GET'])
-def youtubecommentanalysis():
+@app.route('/youtube_comment_analysis',methods=['GET'])
+def youtube_comment_analysis():
     return render_template('youtube.html')
 
-@app.route('/analyse-comments',methods=['GET'])
+@app.route('/',methods=['GET'])
+def home():
+    return render_template('youtube-giphy.html')
+
+@app.route('/analyse-comments',methods=['GET','POST'])
 def analyse_comments():
     search_text=request.form["name"]
     comment_analysis = get_sentiment_from_reviews(search_text)
-    return render_template('youtube.html',analysis = comment_analysis)
+    return render_template('view.html',analysis = comment_analysis)
 
 
 
