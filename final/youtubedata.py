@@ -54,9 +54,13 @@ def get_video_comments(service, **kwargs):
         for item in results['items']:
             comment = item['snippet']['topLevelComment']['snippet']['textDisplay']
             comments.append(comment)
+            if len(comments)>5:
+                break
 
         # Check if another page exists
         if 'nextPageToken' in results:
+            if len(comments)>5:
+                break
             kwargs['pageToken'] = results['nextPageToken']
             results = service.commentThreads().list(**kwargs).execute()
         else:
