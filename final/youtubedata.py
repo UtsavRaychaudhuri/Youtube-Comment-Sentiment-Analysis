@@ -34,11 +34,6 @@ def get_authenticated_service(API_SERVICE_NAME,API_VERSION,SCOPES):
             flow = InstalledAppFlow.from_client_secrets_file(
                 CLIENT_SECRETS_FILE, SCOPES)
             credentials = flow.run_console()
-
-        # Save the credentials for the next run
-        # with open('token.pickle', 'wb') as token:
-        #     pickle.dump(credentials, token)
-
     return build(API_SERVICE_NAME, API_VERSION, credentials = credentials)
 
 def get_video_comments(service, **kwargs):
@@ -48,15 +43,12 @@ def get_video_comments(service, **kwargs):
         results = service.commentThreads().list(**kwargs).execute()
     except HttpError:
         print("There was some errors listing the comments")
-
-
     while results:
         for item in results['items']:
             comment = item['snippet']['topLevelComment']['snippet']['textDisplay']
             comments.append(comment)
             if len(comments)>5:
                 break
-
         # Check if another page exists
         if 'nextPageToken' in results:
             if len(comments)>5:
@@ -65,21 +57,11 @@ def get_video_comments(service, **kwargs):
             results = service.commentThreads().list(**kwargs).execute()
         else:
             break
-
     return comments
 
-def write_to_csv(comments):
-    with open('comments.csv', 'w') as comments_file:
-        comments_writer = csv.writer(comments_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        comments_writer.writerow(['Video ID', 'Title', 'Comment'])
-        for row in comments:
-            # convert the tuple to a list and write to the output file
-            comments_writer.writerow(list(row))
-        
 def get_videos(service, **kwargs):
     final_results = []
     results = service.search().list(**kwargs).execute()
-
     i = 0
     max_pages = 3
     while results and i < max_pages:
@@ -92,7 +74,6 @@ def get_videos(service, **kwargs):
             i += 1
         else:
             break
-
     return final_results
 
 def search_videos_by_keyword(service, **kwargs):
@@ -108,8 +89,7 @@ def search_videos_by_keyword(service, **kwargs):
     return final_result
 
 def callme_for_fetching_comments(search_text):
-    # When running locally, disable OAuthlib's HTTPs verification. When
-    # running in production *do not* leave this option enabled.
+    # When running locally, disable OAuthlib's HTTPs verification.
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
     service = get_authenticated_service(API_SERVICE_NAME,API_VERSION,SCOPES)
     final_comments = search_videos_by_keyword(service, q=search_text, part='id,snippet', eventType='completed', type='video')
