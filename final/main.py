@@ -91,7 +91,7 @@ def home():
 def analyse_comments():
     search_text=request.form["name"]
     comment_analysis = get_sentiment_from_reviews(search_text)
-    return render_template('view.html',analysis = comment_analysis)
+    return render_template('view.html',comment_analysis = comment_analysis)
 
 
 
