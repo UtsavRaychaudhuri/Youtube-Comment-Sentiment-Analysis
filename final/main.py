@@ -95,7 +95,7 @@ def analyse_comments():
 
 
 
- 
+
 @app.route('/upload_photo', methods=['GET', 'POST'])
 def upload_photo():
     photo = request.files['file']
@@ -168,7 +168,7 @@ def upload_photo():
     datastore_client.put(entity)
 
     # Redirect to the home page.
-    return redirect('/')
+    return redirect('/giphy')
 
 @app.errorhandler(500)
 def server_error(e):
