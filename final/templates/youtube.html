@@ -6,11 +6,14 @@
         <p class="heading" style="color:red">Video Name: <input type=text name=name>
         <p><input type=submit value=submit></p>
   </form>
+  {% if comment_analysis %}
   {% for entry in comment_analysis.iteritems() %}
         <p class=entry>
           <br>Video Name: {{entry}}</br>
            <br>Score: {{entry["Score"]}}</br>
             <br>Magnitude: {{entry["Magnitude"]}}</br>
         </p>
+{% endfor %}
+{%endif %}
 {% endblock %}
 </html>
