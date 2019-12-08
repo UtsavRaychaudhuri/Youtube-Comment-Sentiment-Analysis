@@ -27,6 +27,7 @@ def get_sentiment_from_reviews(search_text):
             print(title)
             document = types.Document(
             content=myvideodb[title],
+            language="EN",
             type=enums.Document.Type.PLAIN_TEXT)
 
             # Detects the sentiment of the text
