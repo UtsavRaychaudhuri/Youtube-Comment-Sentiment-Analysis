@@ -36,8 +36,8 @@ def get_authenticated_service(API_SERVICE_NAME,API_VERSION,SCOPES):
             credentials = flow.run_console()
 
         # Save the credentials for the next run
-        with open('token.pickle', 'wb') as token:
-            pickle.dump(credentials, token)
+        # with open('token.pickle', 'wb') as token:
+        #     pickle.dump(credentials, token)
 
     return build(API_SERVICE_NAME, API_VERSION, credentials = credentials)
 
