@@ -2,15 +2,11 @@
 {% extends "layout.html" %}
 {% block content %}   
 <h2 style="color:brown">BubbleTea Store Entries</h2>
-    {% for entry in entries %}
+    {% for entry in comment_analysis.items() %}
         <p class=entry>
-         <br>Store Name: {{ entry.name }} </br>
-	 <br>Store address: {{entry.address }}</br>
-          <br>City: {{entry.city}}</br>
-           <br>State: {{entry.state}}</br>
-            <br>Zip code: {{entry.zipcode}}</br>
-            <br>signed on: {{ entry.signed_on}}</br>
-            <br>message: {{ entry.message }}</br>
+         <br>Video Name: {{entry[0]}} </br>
+	     <br>Score: {{entry[1]['Score']}}</br>
+         <br>Magnitude: {{entry[1]['Magnitude']}}</br>
         </p>
 
     {% endfor %}
