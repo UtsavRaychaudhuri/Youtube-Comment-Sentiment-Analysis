@@ -1,4 +1,4 @@
-body       { font-family: "Helvetica", sans-serif; font-size: 20px; color: #008303; }
+body       { font-family: "Helvetica", sans-serif; font-size: 20px; color: red; }
 a, h1, h2  { color: #00008F; }
 form       { margin:.1em auto; padding:.1em; width: 400px; border: 1px }
 .heading  { font-weight: bold; }
