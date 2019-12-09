@@ -40,6 +40,7 @@ app = Flask(__name__)
 
 @app.route('/word', methods=['GET','POST'])
 def submit():
+<<<<<<< HEAD
  query = request.form['word']
  
  api_instance = giphy_client.DefaultApi()
@@ -66,6 +67,30 @@ def submit():
  #img = Image.open(BytesIO(r.content))
 # return Response(r,mimetype="image/gif",headers={"Content-disposition": "attachment; filename="+q+'.gif'})
  
+=======
+    query = request.form['word']
+    api_instance = giphy_client.DefaultApi()
+    api_key = 'Zlnfm3OuFEhVERsFfVQ36pFOLbffdpuU' # str | Giphy API Key.
+    q = query  # str | Search query term or prhase.
+    
+    limit = 1 # int | The maximum number of records to return. (optional) (default to 25)
+    offset = 0 # int | An optional results offset. Defaults to 0. (optional) (default to 0)
+    rating = 'g' # str | Filters results by specified rating. (optional)
+    lang = 'en' # str | Specify default country for regional content; use a 2-letter ISO 639-1 country code. See list of supported languages <a href = \"../language-support\">here</a>. (optional)
+    fmt = 'json' # str | Used to indicate the expected response format. Default is Json. (optional) (default to json)
+    try: 
+        # Search Endpoint
+        api_response = api_instance.gifs_search_get(api_key, q, limit=limit, offset=offset, rating=rating, lang=lang, fmt=fmt)
+        url=api_response.data[0].images.original.url
+        '''for i in range (0,len(api_response.data)):
+        print(api_response.data[i].images.original.url)'''
+    except ApiException as e:
+        print("Exception when calling DefaultApi->gifs_search_get: %s\n" % e)
+    r = requests.get(url)
+    img = Image.open(BytesIO(r.content))
+    return Response(r,mimetype="image/gif",headers={"Content-disposition": "attachment; filename="+q+'.gif'})
+
+>>>>>>> b376019ef0502ee09765261c8f54a65df81ed1b4
 
 @app.route('/giphy',methods=['GET'])
 def giphy():
@@ -79,22 +104,32 @@ def giphy():
     #image_entity=entity
     # Return a Jinja2 HTML template and pass in image_entities as a parameter.
     return render_template('homepage.html')
+
 @app.route('/youtube_comment_analysis',methods=['GET'])
 def youtube_comment_analysis():
+    """
+    Renders youtube.html page
+    """
     return render_template('youtube.html')
 
 @app.route('/',methods=['GET'])
 def home():
+    """
+    renders the homepage
+    renders to youtube-giphy.html page
+    """
     return render_template('youtube-giphy.html')
 
 @app.route('/analyse-comments',methods=['GET','POST'])
 def analyse_comments():
+    """
+    Handles search text from the form and passes the searchtext to 
+    get_sentiment_from_reviews.
+    After processing renders view.html.
+    """
     search_text=request.form["name"]
     comment_analysis = get_sentiment_from_reviews(search_text)
     return render_template('view.html',comment_analysis = comment_analysis)
-
-
-
 
 @app.route('/upload_photo', methods=['GET', 'POST'])
 def upload_photo():
@@ -172,6 +207,7 @@ def upload_photo():
     #return redirect('/giphy', entity=entity)
     return render_template('homepage.html', entity=entity)
     #return jsonify(entity['blob_name'])
+
 @app.errorhandler(500)
 def server_error(e):
     logging.exception('An error occurred during a request.')
