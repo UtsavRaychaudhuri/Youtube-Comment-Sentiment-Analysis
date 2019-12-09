@@ -34,7 +34,7 @@ import urllib.request
 from nlp import get_sentiment_from_reviews
 
 CLOUD_STORAGE_BUCKET = os.environ.get('CLOUD_STORAGE_BUCKET')
-
+PROJECT_ID = os.environ.get('PROJECT_ID')
 
 app = Flask(__name__)
 
