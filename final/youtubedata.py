@@ -28,11 +28,12 @@ def get_authenticated_service(API_SERVICE_NAME,API_VERSION,SCOPES):
     credentials = None
     #The youtube data api needs app credentials for working which expires after some amount
     # of time. So we are storing the credentials in a token.pickle which stores the credentials
-    #in an encrypted form. Every time the credential expires it has to be refreshed which we are
-    # achieving in the following function.
+    #in an encrypted form. 
     if os.path.exists('token.pickle'):
         with open('token.pickle', 'rb') as token:
             credentials = pickle.load(token)
+            # Every time the credential expires it has to be refreshed which we are
+            # achieving in the following function.
             credentials.refresh(Request())
     return build(API_SERVICE_NAME, API_VERSION, credentials = credentials)
 
