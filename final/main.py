@@ -41,7 +41,7 @@ app = Flask(__name__)
 @app.route('/word', methods=['GET','POST'])
 def submit():
  query = request.form['word']
-
+ 
  api_instance = giphy_client.DefaultApi()
  api_key = 'Zlnfm3OuFEhVERsFfVQ36pFOLbffdpuU' # str | Giphy API Key.
  q = query  # str | Search query term or prhase.
@@ -54,20 +54,23 @@ def submit():
  try:
     # Search Endpoint
   api_response = api_instance.gifs_search_get(api_key, q, limit=limit, offset=offset, rating=rating, lang=lang, fmt=fmt)
-  url=api_response.data[0].images.original.url
-  '''for i in range (0,len(api_response.data)):
-  print(api_response.data[i].images.original.url)'''
+  try:
+   url=api_response.data[0].images.original.url
+   return jsonify(url)
+  except:
+   return "please enter correct word, this word is not found in GIF"
+
  except ApiException as e:
   return "Exception when calling GIF's"
  r = requests.get(url)
- img = Image.open(BytesIO(r.content))
- return Response(r,mimetype="image/gif",headers={"Content-disposition": "attachment; filename="+q+'.gif'})
-
+ #img = Image.open(BytesIO(r.content))
+# return Response(r,mimetype="image/gif",headers={"Content-disposition": "attachment; filename="+q+'.gif'})
+ 
 
 @app.route('/giphy',methods=['GET'])
 def giphy():
     # Create a Cloud Datastore client.
-    datastore_client = datastore.Client()
+    #datastore_client = datastore.Client()
 
     # Use the Cloud Datastore client to fetch information from Datastore about
     # each photo.
@@ -98,7 +101,7 @@ def upload_photo():
     photo = request.files['file']
 
     # Create a Cloud Storage client.
-    storage_client = storage.Client()
+    #storage_client = storage.Client()
 
     # Get the bucket that the file will be uploaded to.
     bucket = storage_client.get_bucket(CLOUD_STORAGE_BUCKET)
