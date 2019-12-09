@@ -75,6 +75,7 @@ def giphy():
     #image_entity=entity
     # Return a Jinja2 HTML template and pass in image_entities as a parameter.
     return render_template('homepage.html')
+
 @app.route('/youtube_comment_analysis',methods=['GET'])
 def youtube_comment_analysis():
     """
@@ -100,9 +101,6 @@ def analyse_comments():
     search_text=request.form["name"]
     comment_analysis = get_sentiment_from_reviews(search_text)
     return render_template('view.html',comment_analysis = comment_analysis)
-
-
-
 
 @app.route('/upload_photo', methods=['GET', 'POST'])
 def upload_photo():
@@ -180,6 +178,7 @@ def upload_photo():
     #return redirect('/giphy', entity=entity)
     return render_template('homepage.html', entity=entity)
     #return jsonify(entity['blob_name'])
+
 @app.errorhandler(500)
 def server_error(e):
     logging.exception('An error occurred during a request.')
