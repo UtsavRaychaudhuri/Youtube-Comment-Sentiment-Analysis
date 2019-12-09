@@ -40,9 +40,8 @@ app = Flask(__name__)
 
 @app.route('/word', methods=['GET','POST'])
 def submit():
-<<<<<<< HEAD
  query = request.form['word']
- 
+
  api_instance = giphy_client.DefaultApi()
  api_key = 'Zlnfm3OuFEhVERsFfVQ36pFOLbffdpuU' # str | Giphy API Key.
  q = query  # str | Search query term or prhase.
@@ -57,7 +56,8 @@ def submit():
   api_response = api_instance.gifs_search_get(api_key, q, limit=limit, offset=offset, rating=rating, lang=lang, fmt=fmt)
   try:
    url=api_response.data[0].images.original.url
-   return jsonify(url)
+   r = requests.get(url)
+   return Response(r,mimetype="image/gif",headers={"Content-disposition": "attachment; filename="+q+'.gif'})
   except:
    return "please enter correct word, this word is not found in GIF"
 
@@ -65,32 +65,9 @@ def submit():
   return "Exception when calling GIF's"
  r = requests.get(url)
  #img = Image.open(BytesIO(r.content))
-# return Response(r,mimetype="image/gif",headers={"Content-disposition": "attachment; filename="+q+'.gif'})
- 
-=======
-    query = request.form['word']
-    api_instance = giphy_client.DefaultApi()
-    api_key = 'Zlnfm3OuFEhVERsFfVQ36pFOLbffdpuU' # str | Giphy API Key.
-    q = query  # str | Search query term or prhase.
-    
-    limit = 1 # int | The maximum number of records to return. (optional) (default to 25)
-    offset = 0 # int | An optional results offset. Defaults to 0. (optional) (default to 0)
-    rating = 'g' # str | Filters results by specified rating. (optional)
-    lang = 'en' # str | Specify default country for regional content; use a 2-letter ISO 639-1 country code. See list of supported languages <a href = \"../language-support\">here</a>. (optional)
-    fmt = 'json' # str | Used to indicate the expected response format. Default is Json. (optional) (default to json)
-    try: 
-        # Search Endpoint
-        api_response = api_instance.gifs_search_get(api_key, q, limit=limit, offset=offset, rating=rating, lang=lang, fmt=fmt)
-        url=api_response.data[0].images.original.url
-        '''for i in range (0,len(api_response.data)):
-        print(api_response.data[i].images.original.url)'''
-    except ApiException as e:
-        print("Exception when calling DefaultApi->gifs_search_get: %s\n" % e)
-    r = requests.get(url)
-    img = Image.open(BytesIO(r.content))
-    return Response(r,mimetype="image/gif",headers={"Content-disposition": "attachment; filename="+q+'.gif'})
+ return Response(r,mimetype="image/gif",headers={"Content-disposition": "attachment; filename="+q+'.gif'})
 
->>>>>>> b376019ef0502ee09765261c8f54a65df81ed1b4
+
 
 @app.route('/giphy',methods=['GET'])
 def giphy():
@@ -137,7 +114,7 @@ def upload_photo():
 
     # Create a Cloud Storage client.
     #storage_client = storage.Client()
-
+    storage_client = storage.Client()
     # Get the bucket that the file will be uploaded to.
     bucket = storage_client.get_bucket(CLOUD_STORAGE_BUCKET)
 
