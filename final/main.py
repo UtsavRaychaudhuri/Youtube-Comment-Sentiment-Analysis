@@ -167,8 +167,8 @@ def upload_photo():
 
     # Redirect to the home page.
     #return redirect('/giphy', entity=entity)
-    return render_template('homepage.html', entity=entity)
-
+   # return render_template('homepage.html', entity=entity)
+    return jsonify(entity)
 @app.errorhandler(500)
 def server_error(e):
     logging.exception('An error occurred during a request.')
