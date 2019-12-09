@@ -45,22 +45,20 @@ def submit():
  api_instance = giphy_client.DefaultApi()
  api_key = 'Zlnfm3OuFEhVERsFfVQ36pFOLbffdpuU' # str | Giphy API Key.
  q = query  # str | Search query term or prhase.
- 
  limit = 1 # int | The maximum number of records to return. (optional) (default to 25)
  offset = 0 # int | An optional results offset. Defaults to 0. (optional) (default to 0)
  rating = 'g' # str | Filters results by specified rating. (optional)
  lang = 'en' # str | Specify default country for regional content; use a 2-letter ISO 639-1 country code. See list of supported languages <a href = \"../language-support\">here</a>. (optional)
  fmt = 'json' # str | Used to indicate the expected response format. Default is Json. (optional) (default to json)
 
- try: 
+ try:
     # Search Endpoint
   api_response = api_instance.gifs_search_get(api_key, q, limit=limit, offset=offset, rating=rating, lang=lang, fmt=fmt)
   url=api_response.data[0].images.original.url
- 
   '''for i in range (0,len(api_response.data)):
   print(api_response.data[i].images.original.url)'''
  except ApiException as e:
-  print("Exception when calling DefaultApi->gifs_search_get: %s\n" % e)
+  return "Exception when calling GIF's"
  r = requests.get(url)
  img = Image.open(BytesIO(r.content))
  return Response(r,mimetype="image/gif",headers={"Content-disposition": "attachment; filename="+q+'.gif'})
@@ -73,12 +71,11 @@ def giphy():
 
     # Use the Cloud Datastore client to fetch information from Datastore about
     # each photo.
-    query = datastore_client.query(kind='Faces')
-    image_entities = list(query.fetch())
-
+    #query = datastore_client.query(kind='Faces')
+    #image_entities = list(query.fetch())
+    #image_entity=entity
     # Return a Jinja2 HTML template and pass in image_entities as a parameter.
-    return render_template('homepage.html', image_entities=image_entities)
-
+    return render_template('homepage.html')
 @app.route('/youtube_comment_analysis',methods=['GET'])
 def youtube_comment_analysis():
     return render_template('youtube.html')
@@ -156,19 +153,21 @@ def upload_photo():
 
     # Construct the new entity using the key. Set dictionary values for entity
     # keys blob_name, storage_public_url, timestamp, and joy.
-    entity = datastore.Entity(key)
+    entity={}
+    #entity = datastore.Entity(key)
     entity['blob_name'] = blob.name
     entity['image_public_url'] = blob.public_url
     entity['timestamp'] = current_datetime
     entity['joy'] = face_joy
     entity['angry']=face_angry
     entity['suprise']=face_suprise
-
+    
     # Save the new entity to Datastore.
-    datastore_client.put(entity)
+    #datastore_client.put(entity)
 
     # Redirect to the home page.
-    return redirect('/giphy')
+    #return redirect('/giphy', entity=entity)
+    return render_template('homepage.html', entity=entity)
 
 @app.errorhandler(500)
 def server_error(e):
