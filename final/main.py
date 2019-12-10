@@ -14,15 +14,16 @@ def home():
 
 @app.route('/giphy',methods=['GET'])
 def giphy():
-    return render_template('homepage.html')
+    #
+    return render_template('gif.html')
 
 
-@app.route('/word', methods=['GET','POST'])
+@app.route('/download', methods=['GET','POST'])
 def submit():
     query = request.form['word']
     url_content=get_gif_from_api(query)
     if url_content=='None':
-       return render_template('homepage.html')
+       return render_template('gif.html')
     else:
        return Response(url_content,mimetype="image/gif",headers={"Content-disposition": "attachment; filename="+query+'.gif'})
 
@@ -31,11 +32,11 @@ def submit():
 def upload_photo():
      photo = request.files['file']
      if not photo:
-         return render_template('homepage.html')
+         return render_template('gif.html')
      else:
          facial_expression=face_recognition(photo)
          # Redirect to the home page.
-         return render_template('homepage.html', facial_expression=facial_expression)
+         return render_template('gif.html', facial_expression=facial_expression)
 
 
 @app.route('/youtube_comment_analysis',methods=['GET'])
