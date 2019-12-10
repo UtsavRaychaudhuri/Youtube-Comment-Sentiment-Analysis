@@ -57,8 +57,6 @@ def analyse_comments():
 @app.route('/upload_photo', methods=['GET', 'POST'])
 def upload_photo():
     photo = request.files['file']
-
-    # Create a Cloud Storage client.
     #storage_client = storage.Client()
     storage_client = storage.Client()
     # Get the bucket that the file will be uploaded to.
@@ -97,20 +95,12 @@ def upload_photo():
         face_joy = 'Unknown'
         face_angry= 'Unknown'
         face_suprise='Unknown'
-    # Create a Cloud Datastore client.
-    datastore_client = datastore.Client()
 
     # Fetch the current date / time.
     current_datetime = datetime.now()
 
-    # The kind for the new entity.
-    kind = 'Faces'
-
     # The name/ID for the new entity.
     name = blob.name
-
-    # Create the Cloud Datastore key for the new entity.
-    key = datastore_client.key(kind, name)
 
     # Construct the new entity using the key. Set dictionary values for entity
     # keys blob_name, storage_public_url, timestamp, and joy.
@@ -122,14 +112,9 @@ def upload_photo():
     entity['joy'] = face_joy
     entity['angry']=face_angry
     entity['suprise']=face_suprise
-    
-    # Save the new entity to Datastore.
-    #datastore_client.put(entity)
 
     # Redirect to the home page.
-    #return redirect('/giphy', entity=entity)
     return render_template('homepage.html', entity=entity)
-    #return jsonify(entity['blob_name'])
 
 @app.errorhandler(500)
 def server_error(e):
