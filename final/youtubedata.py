@@ -26,9 +26,14 @@ def get_authenticated_service(API_SERVICE_NAME,API_VERSION,SCOPES):
     :return: Youtube Cloud Discovery Resource Object
     """
     credentials = None
+    #The youtube data api needs app credentials for working which expires after some amount
+    # of time. So we are storing the credentials in a token.pickle which stores the credentials
+    #in an encrypted form. 
     if os.path.exists('token.pickle'):
         with open('token.pickle', 'rb') as token:
             credentials = pickle.load(token)
+            # Every time the credential expires it has to be refreshed which we are
+            # achieving in the following function.
             credentials.refresh(Request())
     return build(API_SERVICE_NAME, API_VERSION, credentials = credentials)
 
@@ -45,7 +50,8 @@ def get_video_comments(youtube, **kwargs):
     comments = []
     results = ""
     try:
-        #Fetch the comments of a video in a page
+        # Youtube stores comments for videos in multiple pages
+        #This function fetches the comments on a video in a page
         results = youtube.commentThreads().list(**kwargs).execute()
     except HttpError:
         print("There was some errors listing the comments")
@@ -70,10 +76,14 @@ def get_videos(youtube, **kwargs):
     Fetches videos from youtube based on a searchtext and returns the comments from the videos
     param youtube: Resource object, has methods for interacting with the youtube cloud discovery api
     kwargs: Additional arguments passed to http request
-    param part: String
-    param videoId: Integer
-    param textFormat: String
-    return final_result: List
+    kwargs: Additional arguments which are set as query parameters
+    param q: String, any search text that you want to search on youtube
+    param eventType: String, The eventType parameter restricts a search to
+    broadcast events. If you specify a value for this parameter, you must also
+    set the type parameter's value to video. The accepted values are- completed,
+    live, upcoming.
+    param type: String, The type parameter restricts a search query to only retrieve
+    a particular type of resource. The acceptable values are channel, playlist, video
     """
     final_results = []
     results = youtube.search().list(**kwargs).execute()
@@ -94,10 +104,14 @@ def search_videos_by_keyword(youtube, **kwargs):
     """
     Fetches videos from youtube based on a searchtext and returns the comments from the videos
     param youtube: Resource object, has methods for interacting with the youtube cloud discovery api
-    kwargs: Additional arguments passed to http request
-    param q: String
-    param eventType: String
-    param type: String
+    kwargs: Additional arguments which are set as query parameters
+    param q: String, any search text that you want to search on youtube
+    param eventType: String, The eventType parameter restricts a search to
+    broadcast events. If you specify a value for this parameter, you must also
+    set the type parameter's value to video. The accepted values are- completed,
+    live, upcoming.
+    param type: String, The type parameter restricts a search query to only retrieve
+    a particular type of resource. The acceptable values are channel, playlist, video
     return final_result: List
     """
     results = get_videos(youtube, **kwargs)
