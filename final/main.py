@@ -30,9 +30,12 @@ def submit():
 @app.route('/upload_photo', methods=['GET', 'POST'])
 def upload_photo():
      photo = request.files['file']
-     facial_expression=face_recognition(photo)
-     # Redirect to the home page.
-     return render_template('homepage.html', facial_expression=facial_expression)
+     if not photo:
+         return render_template('homepage.html')
+     else:
+         facial_expression=face_recognition(photo)
+         # Redirect to the home page.
+         return render_template('homepage.html', facial_expression=facial_expression)
 
 
 @app.route('/youtube_comment_analysis',methods=['GET'])
