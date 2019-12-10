@@ -1,22 +1,17 @@
-<h1>GIPHY Face Detection</h1>
-
-<br>
-
 <html>
+{% extends "layout.html" %}
+{% block content %}
+<div class="gif">
+<h1 style="text-align:center; color:blue">GIF Face Recognition<h5 style="text-align:center; color:blue"> Download GIF and upload images/GIF's for face recognition</h5> </h1>
   <body>
     <form role="form" method="POST" action="/word">
-            Enter the word: 
-              <input type="text" name="word" class="form-control"  placeholder="Enter a word" style="max-width: 300px;"><br>
+           <h3 style="color:blue"> Download a word related GIF based the word typed : </h3>
+              <input type="text" name="word" class="form-control"  placeholder="Enter a word" style="max-width: 400px;"><br>
             
-       <button type="GIF" class="btn btn-default">GIF</button>
+       <button type="GIF" class="btn btn-default">Download</button>
      </form>
-       <br>
-          {% for error in errors %}
-            <h4>{{ error }}</h4>
-          {% endfor %}
-          <br>
      <form action="upload_photo" method="POST" enctype="multipart/form-data">
-      Upload File: <input type="file" name="file"><br>
+      <h3 style="color:blue">Upload File:</h3> <input type="file" name="file"><br>
       <input type="submit" name="submit" value="Submit">
     </form>
     {% if facial_expression %}
@@ -26,5 +21,6 @@
       <p>angry Likelihood for Face: {{facial_expression['angry']}}</p>
       <p>suprise Likelihood for Face: {{facial_expression['suprise']}}</p>
 {% endif %}
+{% endblock %}
   </body>
 </html> 
