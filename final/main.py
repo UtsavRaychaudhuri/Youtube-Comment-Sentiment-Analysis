@@ -4,12 +4,11 @@ import logging
 import os
 
 from flask import Flask, redirect, render_template, request, jsonify, Response
-from google.cloud import datastore
-from google.cloud import storage
-from google.cloud import vision
+#from google.cloud import datastore
 
 from nlp import get_sentiment_from_reviews
 from get_gif import get_gif_from_api
+from gif_face_recognition import face_recognition
 
 CLOUD_STORAGE_BUCKET = os.environ.get('CLOUD_STORAGE_BUCKET')
 PROJECT_ID = os.environ.get('PROJECT_ID')
@@ -57,7 +56,7 @@ def analyse_comments():
 @app.route('/upload_photo', methods=['GET', 'POST'])
 def upload_photo():
     photo = request.files['file']
-    #storage_client = storage.Client()
+    '''#storage_client = storage.Client()
     storage_client = storage.Client()
     # Get the bucket that the file will be uploaded to.
     bucket = storage_client.get_bucket(CLOUD_STORAGE_BUCKET)
@@ -111,10 +110,11 @@ def upload_photo():
     entity['timestamp'] = current_datetime
     entity['joy'] = face_joy
     entity['angry']=face_angry
-    entity['suprise']=face_suprise
+    entity['suprise']=face_suprise'''
+    facial_expression=face_recognition(photo)
 
     # Redirect to the home page.
-    return render_template('homepage.html', entity=entity)
+    return render_template('homepage.html', facial_expression=facial_expression)
 
 @app.errorhandler(500)
 def server_error(e):
