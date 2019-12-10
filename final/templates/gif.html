@@ -5,22 +5,15 @@
 <h1 style="text-align:center; color:blue">GIF Face Recognition<h5 style="text-align:center; color:blue"> Download GIF and upload images/GIF's for face recognition</h5> </h1>
   <body>
     <form role="form" method="POST" action="/download">
-           <h3 style="color:blue"> Download a word related GIF based the word typed : </h3>
-              <input type="text" name="word" class="form-control"  placeholder="Enter a word" style="max-width: 400px;"><br>
-            
-       <button type="GIF" class="btn btn-default">Download</button>
+           <h3 style="color:blue"> Enter a word : </h3>
+              <input type="text" name="word" class="form-control"  placeholder="Enter a word" style="max-width: 500px;"><br>
+      <br> <button type="GIF" class="btn btn-default">Download GIF</button>
      </form>
-     <form action="upload_photo" method="POST" enctype="multipart/form-data">
+     <form action="upload_photo" method="POST" enctype="multipart/form-data"><br>
       <h3 style="color:blue">Upload File:</h3> <input type="file" name="file"><br>
-      <input type="submit" name="submit" value="Submit">
+     <br> <input type="submit" name="submit" value="Submit" style="max-width: 200px;">
     </form>
-    {% if facial_expression %}
-      <img src="{{facial_expression['image_public_url']}}" width=200 height=200>
-      <p style="color:blue">{{facial_expression['blob_name']}} uploaded on : {{facial_expression['timestamp']}}.</p>
-      <p>Joy Likelihood for Face: {{facial_expression['joy']}}</p>
-      <p>angry Likelihood for Face: {{facial_expression['angry']}}</p>
-      <p>suprise Likelihood for Face: {{facial_expression['suprise']}}</p>
-{% endif %}
+
 {% endblock %}
   </body>
 </html> 

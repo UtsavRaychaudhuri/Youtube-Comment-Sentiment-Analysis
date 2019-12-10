@@ -1,0 +1,13 @@
+<html>
+{% extends "layout.html" %}
+{% block content %}
+<h2 style="color:blue">Face Recognition</h2>
+    {% if facial_expression %}
+      <img src="{{facial_expression['image_public_url']}}" width=500 height=400>
+      <p style="color:blue">{{facial_expression['blob_name']}} uploaded on: {{facial_expression['timestamp']}}.</p>
+      <p style="color:blue">Joy Likelihood: {{facial_expression['joy']}}</p>
+      <p style="color:blue">Angry Likelihood: {{facial_expression['angry']}}</p>
+      <p style="color:blue">Suprise Likelihood: {{facial_expression['suprise']}}</p>
+    {% endif %}
+{% endblock %}
+</html>

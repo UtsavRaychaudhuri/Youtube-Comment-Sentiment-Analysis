@@ -1,3 +1,4 @@
+import time
 from datetime import datetime
 from google.cloud import storage
 from google.cloud import vision
@@ -5,11 +6,9 @@ import os
 CLOUD_STORAGE_BUCKET = os.environ.get('CLOUD_STORAGE_BUCKET')
 PROJECT_ID = os.environ.get('PROJECT_ID')
 def face_recognition(photo):
-#storage_client = storage.Client()
     storage_client = storage.Client()
     # Get the bucket that the file will be uploaded to.
     bucket = storage_client.get_bucket(CLOUD_STORAGE_BUCKET)
-
     # Create a new blob and upload the file's content.
     blob = bucket.blob(photo.filename)
     blob.upload_from_string(
@@ -20,14 +19,13 @@ def face_recognition(photo):
 
     # Create a Cloud Vision client.
     vision_client = vision.ImageAnnotatorClient()
-    # Use the Cloud Vision client to detect a face for our image.
+    # Use the Cloud Vision client to detect a face for the image.
     source_uri = 'gs://{}/{}'.format(CLOUD_STORAGE_BUCKET, blob.name)
     image = vision.types.Image(
         source=vision.types.ImageSource(gcs_image_uri=source_uri))
     faces = vision_client.face_detection(image).face_annotations
 
-    # If a face is detected, save to Datastore the likelihood that the face
-    # displays 'joy,' as determined by Google's Machine Learning algorithm.
+    # If a face is detected, display the joy, anger, suprise likelihood
     if len(faces) > 0:
         face = faces[0]
 
@@ -49,10 +47,8 @@ def face_recognition(photo):
     # The name/ID for the new entity.
     name = blob.name
 
-   # Construct the new entity using the key. Set dictionary values for entity
-    # keys blob_name, storage_public_url, timestamp, and joy.
+   # Construct the new entity facial_expression, set dictionary values like blob_name, storage_public_url, timestamp, anger, suprise and joy.
     facial_expression={}
-    #entity = datastore.Entity(key)
     facial_expression['blob_name'] = blob.name
     facial_expression['image_public_url'] = blob.public_url
     facial_expression['timestamp'] = current_datetime
