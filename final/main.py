@@ -1,38 +1,16 @@
 
-# Copyright 2017 Google Inc. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 from datetime import datetime
 import logging
 import os
 
-from flask import Flask, redirect, render_template, request, jsonify, Response, send_file
-import mimetypes
+from flask import Flask, redirect, render_template, request, jsonify, Response
 from google.cloud import datastore
 from google.cloud import storage
 from google.cloud import vision
-import giphy_client 
-import time
-import giphy_client
-from giphy_client.rest import ApiException
-from pprint import pprint
-from PIL import Image
-import requests
-from io import BytesIO
-import urllib.request
+
 from nlp import get_sentiment_from_reviews
 from get_gif import get_gif_from_api
+
 CLOUD_STORAGE_BUCKET = os.environ.get('CLOUD_STORAGE_BUCKET')
 PROJECT_ID = os.environ.get('PROJECT_ID')
 
@@ -42,29 +20,6 @@ app = Flask(__name__)
 def submit():
  query = request.form['word']
  url_content=get_gif_from_api(query)
- '''api_instance = giphy_client.DefaultApi()
- api_key = 'Zlnfm3OuFEhVERsFfVQ36pFOLbffdpuU' # str | Giphy API Key.
- q = query  # str | Search query term or prhase.
- limit = 1 # int | The maximum number of records to return. (optional) (default to 25)
- offset = 0 # int | An optional results offset. Defaults to 0. (optional) (default to 0)
- rating = 'g' # str | Filters results by specified rating. (optional)
- lang = 'en' # str | Specify default country for regional content; use a 2-letter ISO 639-1 country code. See list of supported languages <a href = \"../language-support\">here</a>. (optional)
- fmt = 'json' # str | Used to indicate the expected response format. Default is Json. (optional) (default to json)
-
- try:
-    # Search Endpoint
-  api_response = api_instance.gifs_search_get(api_key, q, limit=limit, offset=offset, rating=rating, lang=lang, fmt=fmt)
-  try:
-   url=api_response.data[0].images.original.url
-   r = requests.get(url)
-   return Response(r,mimetype="image/gif",headers={"Content-disposition": "attachment; filename="+q+'.gif'})
-  except:
-   return "please enter correct word, this word is not found in GIF"
-
- except ApiException as e:
-  return "Exception when calling GIF's"
- r = requests.get(url)
- #img = Image.open(BytesIO(r.content))'''
  if url_content=='None':
   return render_template('homepage.html')
  else:
@@ -73,15 +28,6 @@ def submit():
 
 @app.route('/giphy',methods=['GET'])
 def giphy():
-    # Create a Cloud Datastore client.
-    #datastore_client = datastore.Client()
-
-    # Use the Cloud Datastore client to fetch information from Datastore about
-    # each photo.
-    #query = datastore_client.query(kind='Faces')
-    #image_entities = list(query.fetch())
-    #image_entity=entity
-    # Return a Jinja2 HTML template and pass in image_entities as a parameter.
     return render_template('homepage.html')
 
 @app.route('/youtube_comment_analysis',methods=['GET'])
