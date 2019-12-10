@@ -32,7 +32,7 @@ import requests
 from io import BytesIO
 import urllib.request
 from nlp import get_sentiment_from_reviews
-
+from get_gif import get_gif_from_api
 CLOUD_STORAGE_BUCKET = os.environ.get('CLOUD_STORAGE_BUCKET')
 PROJECT_ID = os.environ.get('PROJECT_ID')
 
@@ -41,8 +41,8 @@ app = Flask(__name__)
 @app.route('/word', methods=['GET','POST'])
 def submit():
  query = request.form['word']
-
- api_instance = giphy_client.DefaultApi()
+ url_content=get_gif_from_api(query)
+ '''api_instance = giphy_client.DefaultApi()
  api_key = 'Zlnfm3OuFEhVERsFfVQ36pFOLbffdpuU' # str | Giphy API Key.
  q = query  # str | Search query term or prhase.
  limit = 1 # int | The maximum number of records to return. (optional) (default to 25)
@@ -64,9 +64,11 @@ def submit():
  except ApiException as e:
   return "Exception when calling GIF's"
  r = requests.get(url)
- #img = Image.open(BytesIO(r.content))
- return Response(r,mimetype="image/gif",headers={"Content-disposition": "attachment; filename="+q+'.gif'})
-
+ #img = Image.open(BytesIO(r.content))'''
+ if url_content=='None':
+  return render_template('homepage.html')
+ else:
+  return Response(url_content,mimetype="image/gif",headers={"Content-disposition": "attachment; filename="+query+'.gif'})
 
 
 @app.route('/giphy',methods=['GET'])
@@ -91,16 +93,14 @@ def youtube_comment_analysis():
 
 @app.route('/',methods=['GET'])
 def home():
-    """
-    renders the homepage
-    renders to youtube-giphy.html page
-    """
+    """    renders the homepage
+    renders to youtube-giphy.html page """
     return render_template('youtube-giphy.html')
 
 @app.route('/analyse-comments',methods=['GET','POST'])
 def analyse_comments():
     """
-    Handles search text from the form and passes the searchtext to 
+    Handles search text from the form and passes the searchtext to
     get_sentiment_from_reviews.
     After processing renders view.html.
     """
