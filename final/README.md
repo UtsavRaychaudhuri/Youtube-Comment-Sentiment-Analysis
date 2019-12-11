@@ -1,11 +1,11 @@
-# Python Google Cloud Vision sample for Google App Engine Flexible Environment
+# Youtube Comment Analysis and GIF Face Recognition for Google App Engine Standard Environment
 
 [![Open in Cloud Shell][shell_img]][shell_link]
 
 [shell_img]: http://gstatic.com/cloudssh/images/open-btn.png
 [shell_link]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/GoogleCloudPlatform/python-docs-samples&page=editor&open_in_editor=codelabs/flex_and_vision/README.md
 
-This sample demonstrates how to use the [Google Cloud Vision API](https://cloud.google.com/vision/), [Google Cloud Storage](https://cloud.google.com/storage/), and [Google Cloud Datastore](https://cloud.google.com/datastore/) on [Google App Engine Flexible Environment](https://cloud.google.com/appengine).
+This application demonstrates the use of [Google Cloud Vision API](https://cloud.google.com/vision/), [Google Cloud Storage](https://cloud.google.com/storage/),[Youtube Data Api](https://developers.google.com/youtube/v3) and [Cloud Natural Language Api](https://cloud.google.com/natural-language/docs/) on [Google App Engine Standard Environment](https://cloud.google.com/appengine).
 
 ## Setup
 
@@ -35,11 +35,11 @@ with your project ID:
 
 Run the following command to clone the Github repository:
 
-    git clone https://github.com/GoogleCloudPlatform/python-docs-samples.git
+    git clone https://utsavatpdx@bitbucket.org/aleti/cs430-nishna-aleti.git
 
 Change directory to the sample code location:
 
-    cd python-docs-samples/codelabs/flex_and_vision
+    cd cs430-nishna-aleti/final
 
 ## Authentication
 
@@ -47,7 +47,7 @@ Enable the APIs:
 
     gcloud services enable vision.googleapis.com
     gcloud services enable storage-component.googleapis.com
-    gcloud services enable datastore.googleapis.com
+    gcloud services enable language.googleapis.com
 
 Create a Service Account to access the Google Cloud APIs when testing locally:
 
@@ -89,7 +89,7 @@ Set the environment variable `CLOUD_STORAGE_BUCKET`:
 
 Start your application locally:
 
-    python main.py
+    python app.py
 
 Visit `localhost:8080` to view your application running locally. Press `Control-C`
 on your command line when you are finished.
