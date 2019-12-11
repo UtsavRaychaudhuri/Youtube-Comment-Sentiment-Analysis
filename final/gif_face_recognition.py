@@ -7,7 +7,7 @@ CLOUD_STORAGE_BUCKET = os.environ.get('CLOUD_STORAGE_BUCKET')
 def face_recognition(photo):
     """
     store the photo in the cloud storage bucket and make it
-    publicly accessible. Using cloud vision to detect the face
+    publicly accessible. Use cloud vision to detect the face
     for an image. If any faces are detected consider the first
     face and detech the joy, anger and suprise likelihood.
     :param photo: filestorage

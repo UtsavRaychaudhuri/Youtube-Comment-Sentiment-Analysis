@@ -6,7 +6,7 @@ api_instance = giphy_client.DefaultApi()
 def get_gif_from_api(query):
  """
  Using giphy_client create an api instance,
- collect the url of the GIF based on the query and retrieve data from url.
+ collects the url of the GIF based on the query and retrieve data from url.
  :param query:string
  :return url_content: requests.models.Response or string if there are no GIF's
  """
