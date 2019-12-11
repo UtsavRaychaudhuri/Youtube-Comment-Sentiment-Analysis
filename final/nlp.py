@@ -11,13 +11,15 @@ client = language.LanguageServiceClient()
 def get_sentiment_from_reviews(search_text):
     """
     Calls the youtube data apis for fetching the videos and then
-    comments from the videos and returns a dict object comment_analysis
-    The structure of the object returned is {"String":{"String":Integer,"String":Integer}}
-    {"Title of the video":
-        {"Score":the score of the comments from -1 to 1, -1 being highly negative
-        1 being highly positive
-         "Magnitude":The score of how much positive or negative the comments are ranging from 0 to infinity
-    }}
+    comments from the videos and then passes these comments to the
+    natural language api for sentiment Analysis.
+    Returns a dict object comment_analysis
+    The structure of the object returned is {"String":{"String":Integer,
+    "String":Integer}}{"Title of the video":{"Score":the score of the 
+    comments from -1 to 1, -1 being highly negative 1 being highly
+    positive
+    "Magnitude":The score of how much positive or negative the comments are
+    ranging from 0 to infinity}}
     param search_text: String
     return comment_analysis: dict
     """

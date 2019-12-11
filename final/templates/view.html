@@ -1,6 +1,7 @@
 <html>
 {% extends "layout.html" %}
-{% block content %}   
+{% block content %}  
+<h5 style=" color:red">Homepage <a href="{{ url_for('home') }}">Here </a></h5> 
 <h2 style="color:red">Youtube Videos Comment Analysis</h2>
     {% for entry in comment_analysis.items() %}
         <p class=entry>
