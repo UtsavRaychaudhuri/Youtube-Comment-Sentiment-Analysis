@@ -4,7 +4,6 @@ from google.cloud import storage
 from google.cloud import vision
 import os
 CLOUD_STORAGE_BUCKET = os.environ.get('CLOUD_STORAGE_BUCKET')
-PROJECT_ID = os.environ.get('PROJECT_ID')
 def face_recognition(photo):
     storage_client = storage.Client()
     # Get the bucket that the file will be uploaded to.
