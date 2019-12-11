@@ -7,7 +7,7 @@ runtime_config:
 
 env_variables:
   CLOUD_STORAGE_BUCKET: "cs430-nishna-aleti" 
-  PROJECT_ID: "cs430-nishna-aleti"
+
 manual_scaling:
  instances: 1
 resources:
