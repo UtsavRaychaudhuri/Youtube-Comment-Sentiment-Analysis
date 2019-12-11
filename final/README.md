@@ -5,7 +5,7 @@
 [shell_img]: http://gstatic.com/cloudssh/images/open-btn.png
 [shell_link]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/GoogleCloudPlatform/python-docs-samples&page=editor&open_in_editor=codelabs/flex_and_vision/README.md
 
-This application demonstrates the use of [Google Cloud Vision API](https://cloud.google.com/vision/), [Google Cloud Storage](https://cloud.google.com/storage/),[Giphy API](https://developers.giphy.com), [Youtube Data Api](https://developers.google.com/youtube/v3) and [Cloud Natural Language Api](https://cloud.google.com/natural-language/docs/) on [Google App Engine Standard Environment](https://cloud.google.com/appengine).
+This application demonstrates the use of [Google Cloud Vision API](https://cloud.google.com/vision/), [Google Cloud Storage](https://cloud.google.com/storage/), [Giphy API](https://developers.giphy.com), [Youtube Data Api](https://developers.google.com/youtube/v3) and [Cloud Natural Language Api](https://cloud.google.com/natural-language/docs/) on [Google App Engine Standard Environment](https://cloud.google.com/appengine).
 
 ## Setup
 
